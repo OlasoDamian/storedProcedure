@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manejo de Errores en Procedimientos Almacenados</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Manejo de Errores en Procedimientos Almacenados</h1>
+    <p>Es importante manejar adecuadamente los errores dentro de los procedimientos almacenados para asegurar que los datos no se corrompan y que las operaciones sean confiables.</p>
+    
+    <h2>Uso de HANDLER</h2>
+    <p>Los bloques <code>DECLARE ... HANDLER</code> se usan para capturar errores:</p>
+    <pre><code>
+DELIMITER //
+CREATE PROCEDURE verificarSaldo(IN empID INT, IN retiro DECIMAL(10,2))
+BEGIN
+    DECLARE continuar INT DEFAULT 1;
+    DECLARE HANDLER FOR SQLEXCEPTION SET continuar = 0;
+
+    START TRANSACTION;
+    IF retiro > (SELECT saldo FROM Cuentas WHERE id = empID) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Saldo insuficiente';
+    ELSE
+        UPDATE Cuentas SET saldo = saldo - retiro WHERE id = empID;
+    END IF;
+    IF continuar = 1 THEN
+        COMMIT;
+    ELSE
+        ROLLBACK;
+    END IF;
+END //
+DELIMITER ;
+    </code></pre>
+
+    <a href="ejemplos.html">Siguiente: Ejemplos Avanzados</a>
+    <a href="parametros.html">Anterior: Uso de Parámetros</a>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creación de Procedimientos en MySQL</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Creación de Procedimientos en MySQL</h1>
+    <p>Para crear un procedimiento almacenado en MySQL, utilizamos la sentencia <code>CREATE PROCEDURE</code>. Aquí hay algunos ejemplos de cómo se crean procedimientos almacenados:</p>
+
+    <h2>Procedimiento Básico</h2>
+    <pre><code>
+DELIMITER //
+CREATE PROCEDURE ejemploBasico()
+BEGIN
+    SELECT 'Hola, Mundo!';
+END //
+DELIMITER ;
+    </code></pre>
+
+    <h2>Procedimiento con Parámetros</h2>
+    <p>Los procedimientos pueden aceptar parámetros para ser más dinámicos. Aquí se muestra cómo:</p>
+    <pre><code>
+DELIMITER //
+CREATE PROCEDURE saludar(IN nombre VARCHAR(50))
+BEGIN
+    SELECT CONCAT('Hola, ', nombre, '!');
+END //
+DELIMITER ;
+    </code></pre>
+
+    <a href="parametros.html">Siguiente: Uso de Parámetros</a>
+    <a href="introduccion.html">Anterior: Introducción</a>
+</body>
+</html>

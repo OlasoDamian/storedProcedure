@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uso de Parámetros en Procedimientos Almacenados</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Uso de Parámetros en Procedimientos Almacenados</h1>
+    <p>Los procedimientos almacenados en MySQL pueden aceptar diferentes tipos de parámetros para mayor flexibilidad:</p>
+    
+    <h2>Parámetro IN</h2>
+    <p>Usado para pasar valores al procedimiento:</p>
+    <pre><code>
+DELIMITER //
+CREATE PROCEDURE obtenerEmpleado(IN empID INT)
+BEGIN
+    SELECT nombre FROM Empleados WHERE id = empID;
+END //
+DELIMITER ;
+    </code></pre>
+
+    <h2>Parámetro OUT</h2>
+    <p>Usado para devolver valores desde el procedimiento:</p>
+    <pre><code>
+DELIMITER //
+CREATE PROCEDURE obtenerSueldoTotal(OUT sueldoTotal FLOAT)
+BEGIN
+    SELECT SUM(sueldo) INTO sueldoTotal FROM Empleados;
+END //
+DELIMITER ;
+    </code></pre>
+
+    <h2>Parámetro INOUT</h2>
+    <p>Usado tanto para recibir como para devolver valores:</p>
+    <pre><code>
+DELIMITER //
+CREATE PROCEDURE actualizarSueldo(INOUT empID INT, INOUT nuevoSueldo FLOAT)
+BEGIN
+    UPDATE Empleados SET sueldo = nuevoSueldo WHERE id = empID;
+    SELECT sueldo INTO nuevoSueldo FROM Empleados WHERE id = empID;
+END //
+DELIMITER ;
+    </code></pre>
+
+    <a href="errores.html">Siguiente: Manejo de Errores</a>
+    <a href="creacion.html">Anterior: Creación de Procedimientos</a>
+</body>
+</html>

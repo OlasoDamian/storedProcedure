@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos Avanzados de Procedimientos Almacenados</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Ejemplos Avanzados de Procedimientos Almacenados</h1>
+    <p>A continuación, se presentan ejemplos más complejos que demuestran el uso de procedimientos almacenados en escenarios del mundo real:</p>
+    
+    <h2>Ejemplo: Manejo de Inventario</h2>
+    <p>Un procedimiento para actualizar inventario después de una venta:</p>
+    <pre><code>
+DELIMITER //
+CREATE PROCEDURE actualizarInventario(IN productoID INT, IN cantidadVendida INT)
+BEGIN
+    DECLARE cantidadActual INT;
+    SELECT cantidad INTO cantidadActual FROM Inventario WHERE id = productoID;
+    IF cantidadActual >= cantidadVendida THEN
+        UPDATE Inventario SET cantidad = cantidadActual - cantidadVendida WHERE id = productoID;
+    ELSE
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Stock insuficiente';
+    END IF;
+END //
+DELIMITER ;
+    </code></pre>
+
+    <a href="introduccion.html">Inicio: Introducción</a>
+    <a href="errores.html">Anterior: Manejo de Errores</a>
+</body>
+</html>
